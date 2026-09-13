@@ -194,7 +194,7 @@ Internet Gateway
 Internet
 ```
 
-Only one NAT Gateway is used for this development project to keep the architecture simpler and reduce unnecessary infrastructure cost.
+Only one NAT Gateway is used for this development project to keep the architecture simpler.
 
 ---
 
@@ -248,9 +248,9 @@ ECS :8080
 Terraform creates one ECR repository for each microservice:
 
 ```text
-aws-microservices-dev-user-service
-aws-microservices-dev-payment-service
-aws-microservices-dev-notification-service
+aws-ms-dev-user-service
+aws-ms-dev-payment-service
+aws-ms-dev-notification-service
 ```
 
 Image scanning on push is enabled.
@@ -311,9 +311,9 @@ A healthy ECS task must return HTTP `200`.
 Each ECS service has its own CloudWatch log group.
 
 ```text
-/ecs/aws-microservices-dev/user
-/ecs/aws-microservices-dev/payment
-/ecs/aws-microservices-dev/notification
+/ecs/aws-ms-dev/user
+/ecs/aws-ms-dev/payment
+/ecs/aws-ms-dev/notification
 ```
 
 Log retention is configured for development use.
@@ -436,12 +436,12 @@ docker build -t user-service ./user-service
 
 ```bash
 docker tag user-service:latest \
-<AWS_ACCOUNT_ID>.dkr.ecr.ap-southeast-3.amazonaws.com/aws-microservices-dev-user-service:latest
+<AWS_ACCOUNT_ID>.dkr.ecr.ap-southeast-3.amazonaws.com/aws-ms-dev-user-service:latest
 ```
 
 ```bash
 docker push \
-<AWS_ACCOUNT_ID>.dkr.ecr.ap-southeast-3.amazonaws.com/aws-microservices-dev-user-service:latest
+<AWS_ACCOUNT_ID>.dkr.ecr.ap-southeast-3.amazonaws.com/aws-ms-dev-user-service:latest
 ```
 
 Repeat for `payment-service` and `notification-service`.
@@ -454,11 +454,11 @@ Check ECS services:
 
 ```bash
 aws ecs describe-services \
-  --cluster aws-microservices-dev-cluster \
+  --cluster aws-ms-dev-cluster \
   --services \
-    aws-microservices-dev-user-service \
-    aws-microservices-dev-payment-service \
-    aws-microservices-dev-notification-service \
+    aws-ms-dev-user-service \
+    aws-ms-dev-payment-service \
+    aws-ms-dev-notification-service \
   --region ap-southeast-3
 ```
 
@@ -547,8 +547,6 @@ This project provided hands-on practice with:
 * CloudWatch container logging
 * Terraform resource dependencies
 * Troubleshooting AWS networking and container deployments
-
-One of the main lessons from this project was understanding how individual AWS services work together rather than learning each service in isolation.
 
 ---
 
