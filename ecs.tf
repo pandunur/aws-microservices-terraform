@@ -84,6 +84,12 @@ resource "aws_ecs_service" "service" {
     aws_lb_listener.http
   ]
 
+  lifecycle {
+    ignore_changes = [
+      task_definition
+    ]
+  }
+
   tags = {
     Name = "${local.name_prefix}-${each.key}-service"
   }
